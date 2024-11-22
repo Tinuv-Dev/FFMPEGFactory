@@ -10,14 +10,14 @@ on:
 
 jobs:
   list-xcode:
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       - name: List all installed Xcode versions
         run: |
           ls /Applications | grep Xcode
           xcodebuild -version
   build:
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
     # 1. 检出代码
