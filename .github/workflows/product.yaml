@@ -1,0 +1,48 @@
+name: FFMPEGFactory Build
+
+on:
+  push:
+    branches:
+      - main   # 或者你想要触发 CI 的其他分支
+  pull_request:
+    branches:
+      - main   # 或者你想要触发 CI 的其他分支
+
+jobs:
+  list-xcode:
+    runs-on: macos-latest
+    steps:
+      - name: List all installed Xcode versions
+        run: |
+          ls /Applications | grep Xcode
+          xcodebuild -version
+  build:
+    runs-on: macos-latest
+
+    steps:
+    # 1. 检出代码
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. 设置 Xcode 环境
+    - name: Set up Xcode
+      run: |
+        sudo xcode-select -switch /Applications/Xcode_16.1.app
+        xcodebuild -version # 确认选定版本
+
+    # 3. 使用 xcodebuild 编译项目
+    - name: Build the project using xcodebuild
+      run: |
+        xcodebuild -scheme FFMPEGFactory -sdk macosx -configuration Release clean build -derivedDataPath ./build_output
+
+    # 4. 运行命令行程序
+    - name: Run FFMPEGFactory
+      run: |
+        ./build_output/Build/Products/Release/FFMPEGFactory
+
+    # 可选: 上传构建产物等
+    #- name: Upload build artifact
+    #  uses: actions/upload-artifact@v4
+    #  with:
+    #    name: MyApp-Build
+    #    path: /Users/runner/work/GithubActionTest/GithubActionTest/0.mp4
