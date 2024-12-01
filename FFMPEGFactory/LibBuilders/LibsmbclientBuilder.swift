@@ -59,8 +59,8 @@ class LibsmbclientBuilder: Builder {
         try! Utility.launch(path: "/bin/ln", arguments: arguments)
     }
 
-    override func postBuild(platform: PlatformType, arch: ArchType) {
-        super.postBuild(platform: platform, arch: arch)
+    override func postBuild(platform: PlatformType, arch: ArchType,lib: Library) {
+        super.postBuild(platform: platform, arch: arch,lib: lib)
         do {
             try FileManager.default.copyItem(at: lib.libSourceDirectory + "bin/default/source3/libsmb/libsmbclient.a",
                                              to: lib.thin(platform: platform, arch: arch) + "lib/libsmbclient.a")
@@ -68,6 +68,7 @@ class LibsmbclientBuilder: Builder {
             print("LibsmbclientBuilder复制异常: \(error)")
             fatalError()
         }
+        
     }
 
     override func postCompile() {

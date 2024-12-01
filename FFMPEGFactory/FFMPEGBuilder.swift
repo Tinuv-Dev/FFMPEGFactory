@@ -22,8 +22,8 @@ class FFMPEGBuilder {
 extension FFMPEGBuilder {
     func initLibrayList() -> [Library] {
         var libraryList: [Library] = []
-        libraryList.append(.libshaderc)
-        // libraryList.append(.vulkan)
+        // libraryList.append(.libshaderc)
+        libraryList.append(.vulkan)
         // libraryList.append(.lcms2)
         // libraryList.append(.libplacebo)
         // libraryList.append(.libdav1d)

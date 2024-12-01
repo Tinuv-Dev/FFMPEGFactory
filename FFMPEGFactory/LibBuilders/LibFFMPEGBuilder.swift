@@ -68,8 +68,8 @@ class LibFFMPEGBuilder: Builder {
         return env
     }
     
-    override func postBuild(platform: PlatformType, arch: ArchType) {
-        super.postBuild(platform: platform, arch: arch)
+    override func postBuild(platform: PlatformType, arch: ArchType,lib: Library) {
+        super.postBuild(platform: platform, arch: arch,lib: lib)
         let prefix = lib.thin(platform: platform, arch: arch)
         let lldbFile = URL.currentDirectory + "LLDBInitFile"
         let buildURL = lib.scratch(platform: platform, arch: arch)
@@ -193,6 +193,7 @@ class LibFFMPEGBuilder: Builder {
             try? FileManager.default.removeItem(at: URL(fileURLWithPath: "/usr/local/bin/ffprobe"))
             try? FileManager.default.copyItem(at: prefix + "ffprobe", to: URL(fileURLWithPath: "/usr/local/bin/ffprobe"))
         }
+        
     }
     
     override func frameworkExcludeHeaders(_ framework: String) -> [String] {

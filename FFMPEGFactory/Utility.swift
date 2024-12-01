@@ -9,7 +9,7 @@ import Foundation
 
 enum Utility {
     @discardableResult
-    static func shell(_ command: String, isOutput: Bool = false, currentDirectoryURL: URL? = nil, environment: [String: String] = [:]) -> String? {
+    static func shell(_ command: String, isOutput: Bool = true, currentDirectoryURL: URL? = nil, environment: [String: String] = [:]) -> String? {
         do {
             return try launch(executableURL: URL(fileURLWithPath: "/bin/zsh"), arguments: ["-c", command], isOutput: isOutput, currentDirectoryURL: currentDirectoryURL, environment: environment)
         } catch {
@@ -19,12 +19,12 @@ enum Utility {
     }
 
     @discardableResult
-    static func launch(path: String, arguments: [String], isOutput: Bool = false, currentDirectoryURL: URL? = nil, environment: [String: String] = [:]) throws -> String {
+    static func launch(path: String, arguments: [String], isOutput: Bool = true, currentDirectoryURL: URL? = nil, environment: [String: String] = [:]) throws -> String {
         try launch(executableURL: URL(fileURLWithPath: path), arguments: arguments, isOutput: isOutput, currentDirectoryURL: currentDirectoryURL, environment: environment)
     }
 
     @discardableResult
-    static func launch(executableURL: URL, arguments: [String], isOutput: Bool = false, currentDirectoryURL: URL? = nil, environment: [String: String] = [:]) throws -> String {
+    static func launch(executableURL: URL, arguments: [String], isOutput: Bool = true, currentDirectoryURL: URL? = nil, environment: [String: String] = [:]) throws -> String {
         #if os(macOS)
         let task = Process()
         var environment = environment

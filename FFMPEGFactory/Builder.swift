@@ -56,7 +56,11 @@ class Builder {
 
     func postCompile() {}
 
-    func postBuild(platform _: PlatformType, arch _: ArchType) {}
+    func postBuild(platform _: PlatformType, arch _: ArchType, lib _: Library) {}
+
+    func clean(platform _: PlatformType, arch _: ArchType, lib _: Library) {
+        try? FileManager.default.removeItem(at: URL(fileURLWithPath: FFMPEGBuilder.buildDirectory + "/\(lib.rawValue)-build"))
+    }
 
     func compile() {
         for platform in platforms() {
@@ -75,7 +79,8 @@ class Builder {
                 }
                 do {
                     try doCompile(platform: platform, arch: arch, buildURL: buildURL)
-                    postBuild(platform: platform, arch: arch)
+                    postBuild(platform: platform, arch: arch, lib: lib)
+                    clean(platform: platform, arch: arch, lib: lib)
                 } catch {
                     print("编译异常: \(error)\n")
                     fatalError()
@@ -95,7 +100,7 @@ class Builder {
     func frameworkExcludeHeaders(_: String) -> [String] {
         []
     }
-    
+
     func wafPath() -> String {
         "waf"
     }

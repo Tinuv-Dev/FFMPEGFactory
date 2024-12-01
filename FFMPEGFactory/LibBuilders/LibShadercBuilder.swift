@@ -59,8 +59,8 @@ class LibShadercBuilder: Builder {
         ["libshaderc_combined"]
     }
 
-    override func postBuild(platform: PlatformType, arch: ArchType) {
-        super.postBuild(platform: platform, arch: arch)
+    override func postBuild(platform: PlatformType, arch: ArchType,lib: Library) {
+        super.postBuild(platform: platform, arch: arch,lib: lib)
         let thinDir = lib.thin(platform: platform, arch: arch)
         let pkgconfig = thinDir + "lib/pkgconfig"
         do {
@@ -69,5 +69,6 @@ class LibShadercBuilder: Builder {
         } catch {
             print("LibShadercBuilder moveItem error \(error)")
         }
+        
     }
 }
